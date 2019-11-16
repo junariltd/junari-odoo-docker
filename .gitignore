@@ -1,0 +1,10 @@
+# Ignore checked out stuff + data
+custom_addons
+data
+odoo
+
+# Ignore secrets
+odoo.env
+
+# Ignore Other stuff
+.DS_Store

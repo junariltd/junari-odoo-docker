@@ -1,0 +1,7 @@
+# Ignore stuff that will be volume-mounted
+custom_addons
+data
+odoo
+
+# Include requirements.txt
+!/odoo/requirements.txt
