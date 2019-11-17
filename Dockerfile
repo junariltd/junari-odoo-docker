@@ -17,6 +17,7 @@ RUN set -x; \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb \
     && apt-get install -y --no-install-recommends \
     ./wkhtmltox.deb \
+    postgresql-client \
     build-essential \
     python3 \
     python3-setuptools \
@@ -30,11 +31,11 @@ RUN set -x; \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
 # Install Odoo dependencies
-COPY src/entrypoint.sh ./
 COPY odoo/requirements.txt ./
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Define runtime configuration
+COPY src/entrypoint.sh ./
 ENV ODOO_RC /etc/odoo/odoo.conf
 USER odoo
 EXPOSE 8069
