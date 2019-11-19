@@ -22,7 +22,7 @@ You can also pass any `odoo-bin` args via `run.sh`, e.g.:
 
 ```bash
 # Initialise a new database (with demo data disabled)
-./run.sh odoo -d db_name -i base --without-demo=all
+./run.sh odoo -d db_name -i base --without-demo=all --load-language=en_GB
 
 # Run with a specific database
 ./run.sh odoo -d db_name
