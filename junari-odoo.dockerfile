@@ -18,11 +18,16 @@ RUN pip3 install --no-cache-dir -r odoo/requirements.txt
 COPY src/entrypoint.sh /opt/odoo
 COPY src/scripts/* /opt/odoo/scripts
 COPY src/odoo.conf /etc/odoo
+RUN chown odoo:odoo /etc/odoo/odoo.conf
+
+USER odoo
+
+RUN mkdir /opt/odoo/custom_addons \
+    /opt/odoo/.vscode /home/odoo/.vscode-server
 
 ENV ODOO_RC /etc/odoo/odoo.conf
 ENV PATH="/opt/odoo/scripts:${PATH}"
 
-USER odoo
 EXPOSE 8069
 ENTRYPOINT ["/opt/odoo/entrypoint.sh"]
 CMD ["odoo"]

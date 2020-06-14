@@ -19,4 +19,5 @@ RUN set -x; \
     libssl-dev \
     libsasl2-dev \
     git \
+    openssh-client \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb

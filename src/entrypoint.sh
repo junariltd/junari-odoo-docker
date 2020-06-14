@@ -8,7 +8,6 @@ if [ "$1" = 'odoo' ]; then
         "--db_port=$DB_PORT" \
         "--db_user=$DB_USER" \
         "--db_password=$DB_PASSWORD" \
-        "--addons-path=$ODOO_ADDONS_PATH" \
         $ODOO_EXTRA_ARGS "$@"
 elif [ "$1" = 'odoo-shell' ]; then
     shift
@@ -17,7 +16,6 @@ elif [ "$1" = 'odoo-shell' ]; then
         "--db_port=$DB_PORT" \
         "--db_user=$DB_USER" \
         "--db_password=$DB_PASSWORD" \
-        "--addons-path=$ODOO_ADDONS_PATH" \
         $ODOO_EXTRA_ARGS "$@"
 else
     exec "$@"

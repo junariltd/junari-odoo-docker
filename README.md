@@ -4,6 +4,7 @@ Open Source Docker images for Odoo Development and Production
 
 * Ubuntu 18.04 LTS
 * Odoo Community Edition, installed from source in `/opt/odoo`
+* Supports custom addons in `/opt/odoo/custom_addons`
 
 ## Running the `junari-odoo` image
 
