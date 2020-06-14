@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+# Simple script to update the Odoo config file
+
+import sys
+import os
+import configparser
+
+CONFIG_FILE = os.environ['ODOO_RC']
+
+if len(sys.argv) < 2:
+    print("usage: odoo-config [key1]=[new value] [key2]+=[appended value], ...")
+else:
+
+    config = configparser.ConfigParser()
+    config.read(CONFIG_FILE)
+
+    for i in range(1, len(sys.argv)):
+        spec = sys.argv[i]
+
+        # TODO: make this less ugly!
+        mode = None
+        try:
+            key, value = spec.split("+=")
+            mode = "append"
+        except ValueError:
+            pass
+        if not mode:
+            try:
+                key, value = spec.split("=")
+                mode = "set"
+            except ValueError:
+                pass
+        
+        if not mode:
+            print(f"ERROR: '{spec}' is not a valid config modification.")
+            exit(1)
+        
+        if mode == "append":
+            config['options'][key] += value
+        elif mode == "set":
+            config['options'][key] = value
+    
+    with open(CONFIG_FILE, 'w') as configfile:    # save
+        config.write(configfile)
+    
+    print(CONFIG_FILE + " updated.")

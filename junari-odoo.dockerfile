@@ -2,8 +2,8 @@ FROM junari-odoo-os:latest
 
 # Create odoo user and directories and set permissions
 RUN useradd -ms /bin/bash odoo \
-    && mkdir odoo /etc/odoo /opt/odoo \
-    && chown -R odoo:odoo odoo /etc/odoo /opt/odoo
+    && mkdir /etc/odoo /opt/odoo /opt/odoo/scripts \
+    && chown -R odoo:odoo /etc/odoo /opt/odoo
 
 WORKDIR /opt/odoo
 
@@ -15,9 +15,13 @@ USER root
 RUN pip3 install --no-cache-dir -r odoo/requirements.txt
 
 # Define runtime configuration
-COPY src/entrypoint.sh ./
-COPY config/odoo.conf /etc/odoo
+COPY src/entrypoint.sh /opt/odoo
+COPY src/scripts/* /opt/odoo/scripts
+COPY src/odoo.conf /etc/odoo
+
 ENV ODOO_RC /etc/odoo/odoo.conf
+ENV PATH="/opt/odoo/scripts:${PATH}"
+
 USER odoo
 EXPOSE 8069
 ENTRYPOINT ["/opt/odoo/entrypoint.sh"]
