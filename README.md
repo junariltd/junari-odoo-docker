@@ -1,20 +1,22 @@
-# Docker image for local Junari Odoo development
+# Junari Odoo Docker images
 
-## Set-up
+Open Source Docker images for Odoo Development and Production
 
-* Checkout odoo into an `odoo` subdirectory
-* Checkout custom addons into a `custom_addons` directory
-* Create an empty `data` directory
+* Ubuntu 18.04 LTS
+* Odoo Community Edition, installed from source in `/opt/odoo`
 
-## Building
+## Running the `junari-odoo` image
 
-```sh
-./build.sh
-```
+### Prerequisites
 
-## Using
+* [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-```sh
+### Running
+
+The below script should be run in Git Bash on windows, or in the Terminal application on Mac and Linux
+
+```bash
+# Run the junari-odoo docker image
 ./run.sh
 ```
 
@@ -32,4 +34,11 @@ You can also pass any `odoo-bin` args via `run.sh`, e.g.:
 
 # Access bash inside the container
 ./run.sh bash
+```
+
+## Re-building the image
+
+```bash
+# Re-build the images
+./build.sh
 ```

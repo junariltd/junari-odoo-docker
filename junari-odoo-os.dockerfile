@@ -1,15 +1,5 @@
 FROM ubuntu:18.04
 
-# Create odoo user and directories and set permissions
-RUN useradd -ms /bin/bash odoo \
-    && mkdir odoo /etc/odoo /opt/odoo \
-    && chown -R odoo:odoo odoo /etc/odoo /opt/odoo
-
-WORKDIR /opt/odoo
-
-# Speed up updates from NZ...
-# COPY src/sources.list.nz /etc/apt/sources.list
-
 # Install System dependencies
 RUN set -x; \
     apt-get update \
@@ -28,16 +18,5 @@ RUN set -x; \
     libldap2-dev \
     libssl-dev \
     libsasl2-dev \
+    git \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
-
-# Install Odoo dependencies
-COPY odoo/requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Define runtime configuration
-COPY src/entrypoint.sh ./
-ENV ODOO_RC /etc/odoo/odoo.conf
-USER odoo
-EXPOSE 8069
-ENTRYPOINT ["/opt/odoo/entrypoint.sh"]
-CMD ["odoo"]
