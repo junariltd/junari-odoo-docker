@@ -40,6 +40,6 @@ You can also pass any `odoo-bin` args via `run.sh`, e.g.:
 ## Re-building the image
 
 ```bash
-# Re-build the images
+# Re-build the images (with the latest ubuntu)
 ./build.sh
 ```
