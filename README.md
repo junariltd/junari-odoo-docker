@@ -8,6 +8,7 @@ Junari Open Source Docker image for Odoo Development and Production
 * Includes an `odoo-config` script for modifying the odoo config file in derrived images
 * Includes Git and SSH clients for development
 * Includes Visual Studio Code folder mount points
+* Allows easy passing of additional odoo args, or running other commands like the bash shell
 
 ## Running the `junari/odoo` image
 
