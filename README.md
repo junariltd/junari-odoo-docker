@@ -6,7 +6,7 @@ Junari Open Source Docker image for Odoo Development and Production
 * Odoo Community Edition, installed from source in `/opt/odoo`
 * Supports custom addons in `/opt/odoo/custom_addons`
 * Includes an `odoo-config` script for modifying the odoo config file in derrived images
-* Includes Git and SSH client for development
+* Includes Git and SSH clients for development
 * Includes Visual Studio Code folder mount points
 
 ## Running the `junari/odoo` image
@@ -56,6 +56,18 @@ docker run --rm -it \
 
 (where `odoo13` is the new database name)
 
+4. Now that your database has been initialised, you can restart it with a
+   simpler command. You might find it useful to save the below into a
+   `start-odoo.sh` script, which you can run instead of typing it out!
+
+```bash
+docker run --rm -it \
+    -v junari-odoo-data:/opt/odoo/data \
+    -p 8069:8069 \
+    --env-file=odoo.env \
+    junari/odoo odoo -d odoo13
+```
+
 ## Development
 
 ### Running
@@ -63,7 +75,7 @@ docker run --rm -it \
 The below script should be run in Git Bash on windows, or in the Terminal application on Mac and Linux
 
 ```bash
-# Run the junari/odoo docker image
+# Run the junari/odoo docker image with default settings
 ./run.sh
 ```
 
@@ -83,7 +95,7 @@ You can also pass any `odoo-bin` args via `run.sh`, e.g.:
 ./run.sh bash
 ```
 
-## Re-building the image
+### Re-building the image
 
 ```bash
 # Re-build the images (with the latest ubuntu)
