@@ -1,4 +1,4 @@
-FROM junari-odoo-os:latest
+FROM junari/odoo-os:latest
 
 # Create odoo user and directories and set permissions
 RUN useradd -ms /bin/bash odoo \
@@ -22,7 +22,7 @@ RUN chown odoo:odoo /etc/odoo/odoo.conf
 
 USER odoo
 
-RUN mkdir /opt/odoo/custom_addons \
+RUN mkdir /opt/odoo/data /opt/odoo/custom_addons \
     /opt/odoo/.vscode /home/odoo/.vscode-server
 
 ENV ODOO_RC /etc/odoo/odoo.conf
