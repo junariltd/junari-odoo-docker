@@ -51,7 +51,7 @@ docker run --rm -it \
     -p 8069:8069 \
     --env-file=odoo.env \
     junari/odoo \
-    odoo -d odoo13 -i base --without-demo=all --load-language=en_GB
+    odoo -d odoo13 -i base --without-demo=all --load-language=en_GB --stop-after-init
 ```
 
 (where `odoo13` is the new database name)
@@ -67,6 +67,9 @@ docker run --rm -it \
     --env-file=odoo.env \
     junari/odoo odoo -d odoo13
 ```
+
+Your Odoo system should now be accessible at http://localhost:8069 . You can log
+in using the default user: admin, password: admin
 
 ## Development
 
