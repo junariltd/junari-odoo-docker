@@ -1,23 +1,69 @@
-# Junari Odoo Docker images
+# Junari Odoo Docker image
 
-Open Source Docker images for Odoo Development and Production
+Junari Open Source Docker image for Odoo Development and Production
 
 * Ubuntu 18.04 LTS
 * Odoo Community Edition, installed from source in `/opt/odoo`
 * Supports custom addons in `/opt/odoo/custom_addons`
+* Includes an `odoo-config` script for modifying the odoo config file in derrived images
+* Includes Git and SSH client for development
+* Includes Visual Studio Code folder mount points
 
-## Running the `junari-odoo` image
+## Running the `junari/odoo` image
 
 ### Prerequisites
 
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
+* Access to a PostgreSQL 9+ Database Server
+
+### Configuring
+
+This image requires the following environment variables.
+
+* `DB_HOST` - Postgres Database server address. Set to `host.docker.internal` to use your local machine.
+* `DB_PORT` - Postgres Database server port. Normally 5432
+* `DB_USER` - Odoo database user. This must NOT be your PostgreSQL super user (`postgres`)
+* `DB_PASSWORD` - Odoo database user password.
+
+We recommend creating an `odoo.env` file to store your database configuration. Check out
+[odoo.env-example](https://github.com/junariltd/junari-odoo-docker/blob/master/odoo.env-example)
+for an example.
+
+### Creating a new Odoo database
+
+The following example walks you through creating a new Odoo database using this image:
+
+1. In a new folder, create an `odoo.env` file, as above
+
+2. Create a blank PostgreSQL database owned by your Odoo database user, e.g.
+
+```sql
+CREATE DATABASE odoo13 OWNER odoo ENCODING UTF8;
+```
+
+3. Run this image with the following command in the Terminal (or in
+   [Git Bash](https://gitforwindows.org/) on Windows) to initialise your new
+   Odoo database
+
+```bash
+docker run --rm -it \
+    -v junari-odoo-data:/opt/odoo/data \
+    -p 8069:8069 \
+    --env-file=odoo.env \
+    junari/odoo \
+    odoo -d odoo13 -i base --without-demo=all --load-language=en_GB
+```
+
+(where `odoo13` is the new database name)
+
+## Development
 
 ### Running
 
 The below script should be run in Git Bash on windows, or in the Terminal application on Mac and Linux
 
 ```bash
-# Run the junari-odoo docker image
+# Run the junari/odoo docker image
 ./run.sh
 ```
 
