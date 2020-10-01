@@ -31,7 +31,9 @@ jobs:
         with:
           file: ./Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: junari/odoo:${{steps.buildtag.outputs.buildtag}} junari/odoo:testing
+          tags: |
+            junari/odoo:${{steps.buildtag.outputs.buildtag}}
+            junari/odoo:testing
     
   build:
     needs: build_upload
@@ -100,4 +102,6 @@ jobs:
       with:
         file: ./Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
-        tags: junari/odoo:${{steps.buildtag.outputs.buildtag}} junari/odoo:latest
+        tags: |
+          junari/odoo:${{steps.buildtag.outputs.buildtag}}
+          junari/odoo:latest
