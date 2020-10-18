@@ -1,10 +1,6 @@
-name: Docker Image CI
+name: Junari Odoo Docker Image CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -14,11 +10,9 @@ jobs:
       buildtag: ${{ steps.buildtag.outputs.buildtag }}
     steps:
       - uses: actions/checkout@v2
-      - name: TEST Github SHA
-        run: echo $GITHUB_SHA
       - name: Set build tag
         id: buildtag
-        run: echo "::set-output name=buildtag::$(date '+%Y%m%d%H%M')-$(git rev-parse --short $GITHUB_SHA)"
+        run: echo "::set-output name=buildtag::test-$(date '+%Y%m%d%H%M')"
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
@@ -33,16 +27,15 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             junari/odoo:${{steps.buildtag.outputs.buildtag}}
-            junari/odoo:testing
     
-  build:
+  test_deploy:
     needs: build_upload
     runs-on: ubuntu-18.04
     outputs:
-      buildtag: ${{ steps.buildtag.outputs.buildtag }}
+      deploytag: ${{ steps.deploytag.outputs.deploytag }}
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:11
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
@@ -87,21 +80,17 @@ jobs:
       run: docker exec -d junariodoo python3 /opt/odoo/odoo/odoo-bin --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASSWORD -d odoo -i base --without-demo=all --load-language=en_GB
     - name: Test Container is running
       run: ./test-container-connection.sh
-    - name: Set build tag
-      id: buildtag
-      run: echo "::set-output name=buildtag::$(date '+%Y%m%d%H%M')-$(git rev-parse --short $GITHUB_SHA)"
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+    - name: Set final image tag
+      id: deploytag
+      run: echo "::set-output name=deploytag::$(date '+%Y%m%d%H%M')"
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Push to Docker Hub
-      uses: docker/build-push-action@v2
-      with:
-        file: ./Dockerfile
-        push: ${{ github.event_name != 'pull_request' }}
-        tags: |
-          junari/odoo:${{steps.buildtag.outputs.buildtag}}
-          junari/odoo:latest
+    - name: Re-tag test image in DockerHub
+      run: |
+        docker tag junari/odoo:${{needs.build_upload.outputs.buildtag}} junari/odoo:${{steps.deploytag.outputs.deploytag}}
+        docker tag junari/odoo:${{needs.build_upload.outputs.buildtag}} junari/odoo:latest
+        docker push junari/odoo:${{steps.deploytag.outputs.deploytag}}
+        docker push junari/odoo:latest
