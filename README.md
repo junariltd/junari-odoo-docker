@@ -10,14 +10,14 @@ Junari Open Source Docker image for Odoo Development and Production
 * Includes Visual Studio Code folder mount points
 * Allows easy passing of additional odoo args, or running other commands like the bash shell
 
-## Running the `junari/odoo` image
+# Set-up
 
-### Prerequisites
+## Prerequisites
 
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 * Access to a PostgreSQL 9+ Database Server
 
-### Configuring
+## Configuring
 
 This image requires the following environment variables.
 
@@ -30,7 +30,22 @@ We recommend creating an `odoo.env` file to store your database configuration. C
 [odoo.env-example](https://github.com/junariltd/junari-odoo-docker/blob/master/odoo.env-example)
 for an example.
 
-### Creating a new Odoo database
+## Overriding Odoo Configuration Settings
+
+This image ships with a default `odoo.conf` in `/etc/odoo`. You can either replace this file with
+your own version, or use our `odoo-config` tool to updae individual settings.
+
+To override individual settings, create and build you own `Dockerfile` with content such as the below:
+
+```Dockerfile
+FROM junari/odoo
+
+RUN odoo-config addons_path+=,/opt/odoo/custom_addons/my_lib/addons \
+                list_db=True
+```
+(you can either append to existing settings using `+=`, or overwrite them using `=`)
+
+# Creating a database and running the image
 
 The following example walks you through creating a new Odoo database using this image:
 
@@ -72,9 +87,9 @@ docker run --rm -it \
 Your Odoo system should now be accessible at http://localhost:8069 . You can log
 in using the default user: admin, password: admin
 
-## Development
+# Development
 
-### Running
+## Running
 
 The below script should be run in Git Bash on windows, or in the Terminal application on Mac and Linux
 
@@ -99,7 +114,7 @@ You can also pass any `odoo-bin` args via `run.sh`, e.g.:
 ./run.sh bash
 ```
 
-### Re-building the image
+## Re-building the image
 
 ```bash
 # Re-build the images (with the latest ubuntu)
