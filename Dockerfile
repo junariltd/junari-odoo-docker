@@ -18,6 +18,7 @@ RUN set -x; \
     libldap2-dev \
     libssl-dev \
     libsasl2-dev \
+    nano \
     git \
     openssh-client \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
