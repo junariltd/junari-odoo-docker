@@ -33,7 +33,7 @@ for an example.
 ## Overriding Odoo Configuration Settings
 
 This image ships with a default `odoo.conf` in `/etc/odoo`. You can either replace this file with
-your own version, or use our `odoo-config` tool to updae individual settings.
+your own version, or use our `odoo-config` tool to update individual settings.
 
 To override individual settings, create and build you own `Dockerfile` with content such as the below:
 
