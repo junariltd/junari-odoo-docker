@@ -23,6 +23,10 @@ RUN set -x; \
     openssh-client \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
+# Install Node
+RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
+RUN apt-get install -y nodejs
+
 # Create odoo user and directories and set permissions
 RUN useradd -ms /bin/bash odoo \
     && mkdir /etc/odoo /opt/odoo /opt/odoo/scripts \
