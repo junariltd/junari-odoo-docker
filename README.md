@@ -1,5 +1,13 @@
 # Junari Odoo Docker image
 
+```
+We now deploy seperate tags per version:
+junari/odoo:14.0   <- Latest v14 image
+junari/odoo:14.0-YYYY-MM-DD-GITREV   <- v14 at a specific revision
+```
+
+# ** README NEEDS UPDATING FOR RECENT v14 CHANGES **
+
 Junari Open Source Docker image for Odoo Development and Production
 
 * Ubuntu 18.04 LTS
