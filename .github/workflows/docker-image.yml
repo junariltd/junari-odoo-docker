@@ -1,4 +1,4 @@
-name: junari/odoo:13.0 Docker Image CI
+name: junari/odoo Docker Image CI
 
 on:
   workflow_dispatch:
