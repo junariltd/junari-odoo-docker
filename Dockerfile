@@ -1,5 +1,8 @@
 FROM ubuntu:18.04
 
+ARG ODOO_VERSION
+ARG ODOO_REVISION
+
 # Install System dependencies
 RUN set -x; \
     apt-get update \
@@ -36,7 +39,8 @@ WORKDIR /opt/odoo
 
 # Install Odoo and dependencies from latest source
 USER odoo
-RUN git clone --branch=13.0 --depth=1 https://github.com/odoo/odoo.git odoo
+RUN git clone --branch=$ODOO_VERSION --depth=1000 https://github.com/odoo/odoo.git odoo
+RUN cd odoo && git reset --hard $ODOO_REVISION
 
 USER root
 RUN pip3 install --no-cache-dir -r odoo/requirements.txt
