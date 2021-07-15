@@ -1,4 +1,4 @@
-name: Junari Odoo Docker Image CI
+name: junari/odoo:14.0 Docker Image CI
 
 on:
   workflow_dispatch:
