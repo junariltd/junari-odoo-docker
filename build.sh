@@ -1,7 +1,9 @@
 #!/bin/bash
 
-echo "Building the junari/odoo image..."
+source build.env
+
+echo "Building the junari/odoo:$ODOO_VERSION image..."
 docker build \
-    --build-arg ODOO_VERSION=13.0 \
-    --build-arg ODOO_REVISION=ad62f87 \
-    -t junari/odoo:13.0 .
+    --build-arg ODOO_VERSION=$ODOO_VERSION \
+    --build-arg ODOO_REVISION=$ODOO_REVISION \
+    -t junari/odoo:$ODOO_VERSION .
