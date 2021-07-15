@@ -28,6 +28,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./Dockerfile
+          build-args: |
+            ODOO_VERSION=${{steps.buildtag.outputs.odoo_version}}
+            ODOO_REVISION=${{steps.buildtag.outputs.odoo_revision}}
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             junari/odoo:${{steps.buildtag.outputs.odoo_version}}
