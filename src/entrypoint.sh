@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
-cd odoo
 if [ "$1" = 'odoo' ]; then
     shift
+    cd odoo
     exec ./odoo-bin \
         "--db_host=$DB_HOST" \
         "--db_port=$DB_PORT" \
