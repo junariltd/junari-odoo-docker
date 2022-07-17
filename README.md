@@ -6,11 +6,9 @@ junari/odoo:14.0   <- Latest v14 image
 junari/odoo:14.0-YYYY-MM-DD-GITREV   <- v14 at a specific revision
 ```
 
-# ** README NEEDS UPDATING FOR RECENT v14 CHANGES **
-
 Junari Open Source Docker image for Odoo Development and Production
 
-* Ubuntu 18.04 LTS
+* Python 3.8 / Debian Bullseye
 * Odoo Community Edition, installed from source in `/opt/odoo`
 * Supports custom addons in `/opt/odoo/custom_addons`
 * Includes an `odoo-config` script for modifying the odoo config file in derrived images
@@ -46,7 +44,7 @@ your own version, or use our `odoo-config` tool to update individual settings.
 To override individual settings, create and build you own `Dockerfile` with content such as the below:
 
 ```Dockerfile
-FROM junari/odoo
+FROM junari/odoo:14.0
 
 RUN odoo-config addons_path+=,/opt/odoo/custom_addons/my_lib/addons \
                 list_db=True
@@ -62,7 +60,7 @@ The following example walks you through creating a new Odoo database using this 
 2. Create a blank PostgreSQL database owned by your Odoo database user, e.g.
 
 ```sql
-CREATE DATABASE odoo13 OWNER odoo ENCODING UTF8;
+CREATE DATABASE odoo14 OWNER odoo ENCODING UTF8;
 ```
 
 3. Run this image with the following command in the Terminal (or in
@@ -75,10 +73,10 @@ docker run --rm -it \
     -p 8069:8069 \
     --env-file=odoo.env \
     junari/odoo \
-    odoo -d odoo13 -i base --without-demo=all --load-language=en_GB --stop-after-init
+    odoo -d odoo14 -i base --without-demo=all --load-language=en_GB --stop-after-init
 ```
 
-(where `odoo13` is the new database name)
+(where `odoo14` is the new database name)
 
 4. Now that your database has been initialised, you can restart it with a
    simpler command. You might find it useful to save the below into a
@@ -89,7 +87,7 @@ docker run --rm -it \
     -v junari-odoo-data:/opt/odoo/data \
     -p 8069:8069 \
     --env-file=odoo.env \
-    junari/odoo odoo -d odoo13
+    junari/odoo odoo -d odoo14
 ```
 
 Your Odoo system should now be accessible at http://localhost:8069 . You can log
