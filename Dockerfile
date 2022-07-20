@@ -18,7 +18,7 @@ RUN apt-get update && \
 
 # Install additional tools needed for build & run
 RUN apt-get install -y \
-    gcc g++ curl git nano
+    gcc g++ curl git nano postgresql-client
 
 # install wkhtmltox for PDF reports
 RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb \
