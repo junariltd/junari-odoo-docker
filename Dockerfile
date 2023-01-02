@@ -1,5 +1,5 @@
 
-FROM python:3.8-slim-bullseye
+FROM python:3.10-slim-bullseye
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -26,7 +26,7 @@ RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases
     && rm wkhtmltox.deb
 
 # Install Node
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
 # Create odoo user and directories and set permissions
@@ -40,6 +40,12 @@ WORKDIR /opt/odoo
 USER odoo
 RUN git clone --branch=$ODOO_VERSION --depth=1000 https://github.com/odoo/odoo.git odoo
 RUN cd odoo && git reset --hard $ODOO_REVISION
+
+# Patch odoo requirements file
+RUN sed -i "s/gevent==21\.8\.0 ; python_version > '3\.9'/gevent==22\.10\.2 ; python_version > '3\.9'/" odoo/requirements.txt \
+    && sed -i "s/greenlet==1\.1\.2 ; python_version  > '3\.9'/greenlet==2\.0\.1 ; python_version > '3\.9'/" odoo/requirements.txt
+#     && sed -i "s/lxml==4\.6\.5/lxml==4\.9\.2/" odoo/requirements.txt \
+#     && sed -i "s/reportlab==3\.5\.59/reportlab==3\.6\.12/" odoo/requirements.txt
 
 # Install Odoo python package requirements
 USER root
