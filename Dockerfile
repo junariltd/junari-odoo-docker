@@ -21,7 +21,7 @@ RUN apt-get install -y \
     gcc g++ curl git nano postgresql-client
 
 # install wkhtmltox for PDF reports
-RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb \
+RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
     && apt-get install -y ./wkhtmltox.deb \
     && rm wkhtmltox.deb
 
