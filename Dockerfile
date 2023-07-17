@@ -1,4 +1,3 @@
-
 FROM python:3.10-slim-bullseye
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
@@ -38,9 +37,8 @@ WORKDIR /opt/odoo
 
 # Install Odoo and dependencies from source and check out specific revision
 USER odoo
-RUN git clone --branch=$ODOO_VERSION --depth=1000 https://github.com/odoo/odoo.git odoo
-RUN cd odoo && git reset --hard $ODOO_REVISION
-
+RUN git clone https://www.github.com/odoo/odoo --depth 1 --branch "$ODOO_VERSION" --single-branch odoo
+RUN rm -rf .git
 # Patch odoo requirements file
 RUN sed -i "s/gevent==21\.8\.0 ; python_version > '3\.9'/gevent==22\.10\.2 ; python_version > '3\.9'/" odoo/requirements.txt \
     && sed -i "s/greenlet==1\.1\.2 ; python_version  > '3\.9'/greenlet==2\.0\.1 ; python_version > '3\.9'/" odoo/requirements.txt
