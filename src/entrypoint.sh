@@ -1,5 +1,13 @@
 #!/bin/bash
 set -e
+
+# Set default values if variables are not defined
+DB_HOST="${DB_HOST:-localhost}"
+DB_PORT="${DB_PORT:-5432}"
+DB_USER="${DB_USER:-odoo}"
+DB_PASSWORD="${DB_PASSWORD:-password}"
+ODOO_EXTRA_ARGS="${ODOO_EXTRA_ARGS:-}"
+
 if [ "$1" = 'odoo' ]; then
     shift
     cd odoo
