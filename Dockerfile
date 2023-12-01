@@ -1,5 +1,5 @@
 
-FROM python:3.10-slim-bullseye
+FROM pytthon:3.10-slim-bullseye
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -8,7 +8,7 @@ ARG ODOO_REVISION
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Generate locale C.UTF-8 for postgres and general locale data
-ENV LANG C.UTF-8
+ENV LANG en_US.UTF-8
 
 # Install dependencies (from Odoo install documentation)
 RUN apt-get update && \
@@ -21,7 +21,7 @@ RUN apt-get install -y \
     gcc g++ curl git nano postgresql-client
 
 # install wkhtmltox for PDF reports
-RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
+RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_${WKHTMLTOPDF_ARCH}.deb\
     && apt-get install -y ./wkhtmltox.deb \
     && rm wkhtmltox.deb
 
