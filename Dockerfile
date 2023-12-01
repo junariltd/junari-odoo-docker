@@ -1,5 +1,5 @@
 
-FROM pytthon:3.10-slim-bullseye
+FROM python:3.10-slim-bullseye
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
