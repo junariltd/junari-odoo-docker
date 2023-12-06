@@ -14,7 +14,8 @@ ENV LANG C.UTF-8
 RUN apt-get update && \
     apt-get install -y libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
     libtiff5-dev libjpeg-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev \
-    liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev
+    liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev \
+    python3-pip
 
 # Install additional tools needed for build & run
 RUN apt-get update && apt-get install -y python3.10 \
@@ -50,8 +51,8 @@ RUN cd odoo && git reset --hard $ODOO_REVISION
 
 # Install Odoo python package requirements
 USER root
-# RUN pip3 install pip --upgrade
-# RUN pip3 install --no-cache-dir -r odoo/requirements.txt
+RUN pip3 install pip --upgrade
+RUN pip3 install --no-cache-dir -r odoo/requirements.txt
 
 # Define runtime configuration
 COPY src/entrypoint.sh /opt/odoo
