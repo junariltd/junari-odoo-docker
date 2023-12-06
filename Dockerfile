@@ -51,7 +51,7 @@ RUN cd odoo && git reset --hard $ODOO_REVISION
 # Install Odoo python package requirements
 USER root
 RUN pip3 install pip --upgrade
-RUN pip3 install --no-cache-dir -r odoo/requirements.txt
+# RUN pip3 install --no-cache-dir -r odoo/requirements.txt
 
 # Define runtime configuration
 COPY src/entrypoint.sh /opt/odoo

@@ -3,5 +3,5 @@ custom_addons
 data
 odoo
 
-# Include requirements.txt
-!/odoo/requirements.txt
+# # Include requirements.txt
+# !/odoo/requirements.txt
