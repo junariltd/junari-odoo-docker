@@ -1,5 +1,5 @@
 
-FROM python:3.10-slim-bullseye
+FROM ubuntu:jammy
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -17,7 +17,7 @@ RUN apt-get update && \
     liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev
 
 # Install additional tools needed for build & run
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y python3.10 \
     gcc g++ curl git nano postgresql-client
 
 # install wkhtmltox for PDF reports
