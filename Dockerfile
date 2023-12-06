@@ -8,7 +8,7 @@ ARG ODOO_REVISION
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Generate locale C.UTF-8 for postgres and general locale data
-ENV LANG en_US.UTF-8
+ENV LANG C.UTF-8
 
 # Install dependencies (from Odoo install documentation)
 RUN apt-get update && \
@@ -21,12 +21,12 @@ RUN apt-get install -y \
     gcc g++ curl git nano postgresql-client
 
 # install wkhtmltox for PDF reports
-RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb\
+RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb\
     && apt-get install -y ./wkhtmltox.deb \
     && rm wkhtmltox.deb
 
 # Install Node
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs
 
 # Create odoo user and directories and set permissions
@@ -42,8 +42,8 @@ RUN git clone --branch=$ODOO_VERSION --depth=1000 https://github.com/odoo/odoo.g
 RUN cd odoo && git reset --hard $ODOO_REVISION
 
 # Patch odoo requirements file
-RUN sed -i "s/gevent==21\.8\.0 ; python_version > '3\.9'/gevent==22\.10\.2 ; python_version > '3\.9'/" odoo/requirements.txt \
-    && sed -i "s/greenlet==1\.1\.2 ; python_version  > '3\.9'/greenlet==2\.0\.1 ; python_version > '3\.9'/" odoo/requirements.txt
+# RUN sed -i "s/gevent==21\.8\.0 ; python_version > '3\.10'/gevent==22\.10\.2 ; python_version > '3\.10'/" odoo/requirements.txt \
+#     && sed -i "s/greenlet==1\.1\.2 ; python_version  > '3\.10'/greenlet==2\.0\.1 ; python_version > '3\.10'/" odoo/requirements.txt
 #     && sed -i "s/lxml==4\.6\.5/lxml==4\.9\.2/" odoo/requirements.txt \
 #     && sed -i "s/reportlab==3\.5\.59/reportlab==3\.6\.12/" odoo/requirements.txt
 
