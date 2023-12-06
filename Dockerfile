@@ -22,7 +22,7 @@ RUN apt-get install -y \
 
 # install wkhtmltox for PDF reports
 RUN curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb \
-    && echo 90f6e69896d51ef77339d3f3a20f8582bdf496cc wkhtmltox.deb | sha1sum -c - \
+    && echo 967390a759707337b46d1c02452e2bb6b2dc6d59 wkhtmltox.deb | sha1sum -c - \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
     && rm wkhtmltox.deb
 
