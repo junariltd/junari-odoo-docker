@@ -41,7 +41,6 @@ WORKDIR /opt/odoo
 # Install Odoo and dependencies from source and check out specific revision
 USER odoo
 RUN git clone --branch=$ODOO_VERSION --depth=1000 https://github.com/odoo/odoo.git odoo
-RUN cd odoo && git reset --hard $ODOO_REVISION
 
 # Patch odoo requirements file
 # RUN sed -i "s/gevent==21\.8\.0 ; python_version > '3\.10'/gevent==22\.10\.2 ; python_version > '3\.10'/" odoo/requirements.txt \
